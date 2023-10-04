@@ -1,0 +1,224 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AFPEC-LCC</title>
+  <link rel="icon" type="image/png" href="../static/images/Forum-anticorruption_1.png">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../static/CSS/sTyleSheet.css">
+  <!-- Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-md fixed-top">
+    <a class="navbar-brand" href="#">
+      <img src="../static/images/Logo PNG De l'afpec.png" alt="Logo 1">
+      <img src="../static/images/Forum-anticorruption_1.png" alt="Logo 2" class="logo2">
+    </a>
+    <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <div class="navbar-nav">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'LCC_App:home' %}">Accueil</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'LCC_App:list_books' %}">Bibliothèque</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'LCC_App:list_events' %}">Evènement</a>
+          </li>
+        </ul>
+        <div class="mx-4"></div>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'LCC_App:custom_login' %}">Se connecter</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'LCC_App:add_concurrent' %}">S'inscrire</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <section class="home-section">
+    <div class="container-section">
+          <div class="content ">
+            <p>Un fond documentaire sur la lutte contre la corruption est une collection organisée de ressources documentaires telles que des rapports, des articles, des lois, des documents gouvernementaux, et d'autres informations liées à la prévention, à la détection et à la répression de la corruption. Ce fond documentaire vise à rassembler des connaissances et des preuves pour soutenir les efforts visant à lutter contre la corruption à différents niveaux, que ce soit au sein des gouvernements, des entreprises, des organisations internationales ou de la société civile.
+
+              Il permet aux chercheurs, aux activistes et à d'autres acteurs de disposer d'un accès facile aux informations pertinentes concernant la corruption, ce qui peut les aider à élaborer des politiques, à mener des enquêtes, à sensibiliser le public et à prendre des mesures pour réduire ce fléau.Ce fond documentaire sur la lutte contre la corruption contribue ainsi à renforcer la transparence, la responsabilité et l'intégrité dans les institutions publiques et privées, favorisant ainsi un environnement plus équitable et éthique.
+            </p>
+            <p>Aussi ce fond documentaire vous, les participants au concours de mémoire sur la lutte contre la corruption, a été mis à disposition pour vos recherches. Alors bonne recherches et bon travail !</p>
+            <button class="btn custom-btn" onclick="window.location.href='./library.html'">Aller au fond documentaire</button>
+
+          </div>
+         </div>
+  </section>
+  
+
+  <section class="category_">
+  <div class="container swiper-container">
+    <h2 class="categoryTitle">Veuillez choisir une Catégorie à lire</h2>
+      <div class="swiper-wrapper">
+        {% for category in categories %}
+        <div class="card swiper-slide">
+          <div class="image-box">
+            <img src="{{ category.img.url }}"alt="" /> 
+          </div>
+          <div class="profile-details">
+            <h3 class="name"><a href="/library/?query={{ category.name }}" class="cate">{{category.name}}</a> <br> <p class="description">{{category.description}}</p></h3>
+            
+          </div>
+        </div>
+        {% endfor %} 
+        
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+  </div>
+  
+  </section>
+
+  <section class="Evenement">
+  <h2 class="eventTitle">Nos trois derniers évènements</h2>
+  <div class="container">
+    <div class="row">
+      {% for event in list_events %}
+      <div class="col-md-4">
+        <div class="custom-event-item">
+          <img src="{{ event.img.url }}" alt="{{ event.title }}">
+          <h3 class="eventText"><a href="/events/?query={{ event.title }}" class="cate">{{event.title}}</a></h3>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  </section>
+
+  <section class="contact">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 sendMessage">
+          <h2 class="sendText">Envoyer un message <i class="fa fa-envelope  enveloppe-icon"></i> </h2>
+          <form method="post" action="{% url 'LCC_App:home' %}">
+            {% csrf_token %}
+            <div class="form-group row">
+              <div class="col-md-6">
+                <input type="text" id="nom" name="nom" class="form-control custom-input" placeholder="Nom" required>
+              </div>
+              <div class="col-md-6">
+                <input type="text" id="prenom" name="prenom" class="form-control custom-input" placeholder="Prénom" required>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6">
+                <input type="tel" id="tel"name="tel" class="form-control custom-input" placeholder="Téléphone" required>
+              </div>
+              <div class="col-md-6">
+                <input type="email" id="email" name="email" class="form-control custom-input" placeholder="Email" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <textarea id="message" name="message" class="form-control custom-input" rows="4" placeholder="Message" required></textarea>
+            </div>
+            <button type="submit" class="btn custom-btn">Envoyer</button>
+          </form>
+          {% if messages %}
+          <div class="container">
+            {% for message in messages %}
+            <div class="alert alert-success">
+                <strong>Success:</strong> {{ message }}
+            </div>
+            {% endfor %}
+            <!-- Your success message here -->
+        </div>
+        {% endif %}
+        </div>
+        <div class="col-md-6 information ">
+          <h2 class="infoText">Information</h2>
+          <div class="row infoSerie">
+            <div class="col-md-2">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="col-md-10">
+              <p> <span>12, Rue Pacot, Port-au-Prince, Haiti</span></p>
+            </div>
+          </div>
+
+          <div class="row infoSerie" >
+            <div class="col-md-2">
+              <i class="fa fa-phone"></i>
+            </div>
+            <div class="col-md-10">
+              <p> <span>(+509) 3617 8941 <br>(+509) 4467 7790</span></p>
+              
+            </div>
+          </div>
+
+          <div class="row infoSerie">
+            <div class="col-md-2">
+              <i class="fa fa-envelope"></i>
+            </div>
+            <div class="col-md-10">
+              <p> <span>afpechaiti@yahoo.com</span></p>
+            </div>
+          </div>
+          <div class="row infoSerie">
+            <div class="col-md-2">
+              <i class="fab fa-facebook-f"></i>
+            </div>
+            <div class="col-md-10">
+              <p><span>AFPEC</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+  <!-- Bootstrap JS (Optional, for responsive functionality) -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    $(function () {
+      $(document).scroll(function () {
+        var $nav = $(".navbar");
+        $nav.toggleClass("navbar-scrolled", $(this).scrollTop() > $nav.height());
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 'auto',
+        spaceBetween: 20,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+      });
+    });
+
+  </script> 
+</body>
+
+</html>

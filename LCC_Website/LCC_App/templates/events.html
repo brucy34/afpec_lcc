@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events Page</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static 'CSS/events.css' %}">
+  <link rel="icon" type="image/png" href="../static/images/Forum-anticorruption_1.png">
+</head>
+<body>
+    <nav class="navbar navbar-expand-md fixed-top">
+        <a class="navbar-brand" href="#">
+          <img src="../static/images/Logo PNG De l'afpec.png" alt="Logo 1">
+          <img src="../static/images/Forum-anticorruption_1.png" alt="Logo 2" class="logo2">
+        </a>
+        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <div class="navbar-nav">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'LCC_App:home' %}">Accueil</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'LCC_App:list_books' %}">Bibliothèque</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'LCC_App:list_events' %}">Evènement</a>
+              </li>
+            </ul>
+            <div class="mx-4"></div>
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'LCC_App:custom_login' %}">Se connecter</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'LCC_App:add_concurrent' %}">S'inscrire</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div class="container custom-container">
+        <form method="GET" action="{% url 'LCC_App:list_events' %}" class="search-container">
+          <input type="text" class="search-input" name="query" placeholder="Rechercher un évènement...">
+          <button type="submit" class="search-button">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+      </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3 left-section">
+        <h2>Last 5 Events</h2>
+        <ul>
+          {% for event in last_events %}
+          <li><a href="/events/?query={{ event.title }}" class="cate">{{ event.title }} - {{ event.date}}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="col-md-9">
+        <section class="container mt-5">
+          <div class="row">
+            {% for event in results %}
+              <div class="col-md-6 mb-4">
+                <div class="card" width="300" height="150">
+                  <video src="{{ event.vid.url }}"  class="vids" alt="{{ event.title }}" controls></video>
+                  <div class="card-body">
+                    <p class="card-text">{{ event.title }} - {{ event.date}}</p>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and jQuery (optional, for certain Bootstrap features) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

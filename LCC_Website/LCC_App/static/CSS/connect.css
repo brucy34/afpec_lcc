@@ -1,0 +1,78 @@
+.navbar {
+    background-color: #ed9700 ; /* Couleur de base (blanc) */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Hide the default icon */
+.navbar-toggler-icon {
+  background-image: url('../images/menu-principal.png');
+}
+ 
+
+  .navbar-brand img {
+    max-height: 50px;
+    margin-right: 10px;
+  }
+  
+  .nav-link {
+    color: white !important;
+    margin-left: 30px;
+  }
+
+  .navbar-toggler-icon {
+    background-image: url('../images/menu-principal.png');
+  } 
+  
+  .navbar-toggler {
+    border: none;
+    color: white; 
+  }
+
+  /* Center the form vertically */
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+/* Custom color for the button */
+.btn-primary {
+    background-color: #ed9700;
+    border-color: #ed9700;
+}
+body {
+    background-color: aliceblue;
+}
+
+/* Adjust the card layout for smaller screens */
+@media screen and (max-width: 1200px) {
+  .card {
+    flex: 0 0 calc(33.33% - 20px); /* Adjust card width for smaller screens */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .card {
+    flex: 0 0 calc(50% - 20px); /* Adjust card width for mobile screens */
+  }
+}
+
+@media (min-width: 768px) {
+  /* For medium and larger screens, set flex direction to row */
+  .row.flex-md-row {
+    flex-direction: row;
+  }
+
+  .col-md-6.flex-md-row, .col-md-6.flex-md-row .img-home {
+    display: flex;
+  }
+
+  .col-md-6.flex-md-row {
+    justify-content: flex-end;
+  }
+
+  .col-md-6.flex-md-row .img-home img {
+    margin-left: 20px;
+  }
+}

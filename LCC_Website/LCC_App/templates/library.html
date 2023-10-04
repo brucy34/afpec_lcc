@@ -1,0 +1,204 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <link rel="icon" type="image/png" href="../static/images/Forum-anticorruption_1.png">
+
+   <!--Fontawesome CDN link-->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'CSS/libRaryStyle.css' %}">
+
+  <!-- Script for PDF preview -->
+  <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+
+</head>
+<body>
+      <nav class="navbar navbar-expand-md fixed-top">
+        <a class="navbar-brand" href="#">
+          <img src="../static/images/Logo PNG De l'afpec.png" alt="Logo 1">
+          <img src="../static/images/Forum-anticorruption_1.png" alt="Logo 2" class="logo2">
+        </a>
+        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <div class="navbar-nav">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'LCC_App:home' %}">Accueil</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'LCC_App:list_books' %}">Bibliothèque</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'LCC_App:list_events' %}">Evènement</a>
+              </li>
+            </ul>
+            <div class="mx-4"></div>
+            <ul class="navbar-nav ml-auto mr-2">
+            {% if user.is_authenticated %}
+                  <li class="nav-item">
+                         <a class="nav-link" href="#">Bienvenue dans le fond documentaire, {{ user.firstname }} {{ user.lastname }}</a>
+                  </li>
+                  <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LCC_App:logout' %}">Se déconnecter</a>
+                  </li>
+            {% else %}
+                  <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LCC_App:custom_login' %}">Se connecter</a>
+                  </li>
+                  <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LCC_App:add_concurrent' %}">S'inscrire</a>
+                  </li>
+            {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+      {% block content %}
+  <div class="container custom-container">
+    <form method="GET" action="{% url 'LCC_App:list_books' %}" class="search-container">
+      <input type="text" class="search-input" name="query" placeholder="Rechercher un document...">
+      <button type="submit" class="search-button">
+        <i class="fas fa-search"></i>
+      </button>
+    </form>
+  </div>
+  <section class="container-fluid">
+    <!-- <div class="container"> -->
+      <div class="row">
+        <div class="col-md-3 book-menu">
+          <!-- <div class=""> -->
+                  <li>Les categories</li>
+                  <ul>
+                    {% for category in categories %}
+                    <li><a href="/library/?query={{category.name}}" class="category">{{category.name}}</a></li>
+                    {% endfor %}
+                    <li><a href="/library/?query=all" class="category">Tous les documents</a></li>
+                  </ul>
+                  
+                </ul>
+                {% if user.is_authenticated %}
+                <li class="personalLibrary"><i class="fas fa-bookmark  enveloppe-icon"></i> <a href="/library/?query=my library" class="category">Ma bibliotheque personnelle</a></li>
+                {% endif %}
+             </ul>
+          <!-- </div> -->
+        </div>
+        <div class="col-md-9">
+          {% if query and query != 'all' and query != 'my library' %}
+  <h4 class="title">Résultat du recherche pour '{{query}}'</h4>
+  {% endif %}
+  {% if query == 'None' %}
+  <h4 class="title">Les 10 premiers documents du fond documentaire</h4>
+  {% endif %}
+  {% if query == 'all' %}
+  <h4 class="title">Tous les documents du fond documentaire</h4>
+  {% endif %}
+  {% if query == 'my library' %}
+  <h4 class="title">Tous les documents de ma bibliothèque</h4>
+  {% endif %}
+          <section class="container mt-5">
+            <div class="row">
+              {% for book in results %}
+                  <div class="col-md-6 mb-4" >
+
+                  <div class="card">
+                    <img src="../static/images/pdf.png" alt="{{ book.title }}" style="height: 50px;width:60px;" class="card-img-top" onclick="showBookInfo('{{ book.title }}', '{{ book.subtitle }}', '{{ book.author }}', '{{ book.year }}', '{{ book.edition }}', '{{ book.nbPage }}', '{{ book.pdf.url }}','{{book.pk}}')">
+                    <div class="card-body">
+                      <p class="card-text">{{ book.title }}</p>
+                      <form method="post">
+                      {% csrf_token %}
+                      <button class="library-button" onclick="toggleLibrary('{{book.pk}}', this )">
+                        {% if user.is_authenticated and book in user.personal_library.all %}
+                          <i class="fas fa-bookmark"></i>
+                        {% else %}
+                          <i class="far fa-bookmark"></i>
+                        {% endif %}
+                      </button>
+                    </form>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            <!-- </div> -->
+          </section>
+        </div>
+      </div>
+  </section>
+  <!-- ... (previous HTML code) ... -->
+
+<div class="modal" id="bookModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="bookTitle"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Subtitle:</strong> <span id="bookSubtitle"></span></p>
+        <p><strong>Author:</strong> <span id="bookAuthor"></span></p>
+        <p><strong>Year:</strong> <span id="bookYear"></span></p>
+        <p><strong>Edition:</strong> <span id="bookEdition"></span></p>
+        <p><strong>Number of Pages:</strong> <span id="bookPages"></span></p>
+        <div id="pdfViewer" style="margin-top: 20px;"></div>
+        <!-- Placeholder for the iframe -->
+        <div id="pdfIframeContainer"></div>
+      </div>
+      <div class="modal-footer">
+        <a id="readPdfButton" class="btn btn-primary read-pdf-button"  target="_blank" href="#">Read PDF</a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="unauthorizedModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Unauthorized Access</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>You need to be logged in to access this PDF.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ... (remaining HTML code) ... -->
+
+     
+  <!-- Inside your HTML template -->
+<div id="auth-status" data-is-authenticated="{% if user.is_authenticated %}true{% else %}false{% endif %}"></div>
+
+  <script src="../static/JS/libRary.js">
+   
+    
+    </script>
+     
+    
+{% endblock %}
+
+   <!-- Bootstrap JS (Optional, for responsive functionality) -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  
+</body>
+</html>

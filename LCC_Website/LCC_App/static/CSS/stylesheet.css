@@ -1,0 +1,335 @@
+/* Custom styles for the navbar */
+.navbar {
+    background-color: #ed9700 ; /* Couleur de base (blanc) */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Changement de couleur de la barre de navigation lors du défilement */
+.navbar-scrolled {
+    background-color: #ed9700; /* Nouvelle couleur lors du défilement (jaune) */
+    border: 1px solid transparent;
+    border-radius: 5px;
+  }
+  /* Hide the default icon */
+.navbar-toggler-icon {
+  background-image: url('../images/menu-principal.png');
+} 
+
+  .navbar-brand img {
+    max-height: 50px;
+    margin-right: 10px;
+  }
+  
+  .nav-link {
+    color: white !important;
+    margin-left: 30px;
+  }
+
+
+
+  .navbar-toggler {
+    border: none;
+    color: white; 
+  }
+  
+
+/* Custom styles for the home section */
+.home-section {
+    color: black;
+   margin-left: 0px;
+   /* margin-top: 20px; */
+  }
+
+  .container-section {
+    background-image: url('../images/image_bibliotheque2.jpg');
+    background-size: cover; /* Pour ajuster l'image à la taille du div */
+    background-position: center; /* Centrer l'image horizontalement et verticalement */
+    color: #fff;
+    padding-bottom: 30px;
+  }
+  
+  .content {
+    text-align: left;
+    margin-left: 40px;
+    margin-top: 100px;
+  }
+  
+  .content h1 {
+    font-size: 36px;
+  }
+  
+  .content p {
+    font-size: 18px;
+  }
+  
+  .content button {
+    margin-top: 20px;
+  }
+  
+  .custom-btn {
+    background-color: #ed9700;
+    border-color: #ed9700;
+    color: #fff;
+  }
+  
+  @media (min-width: 768px) {
+    /* For medium and larger screens, set flex direction to row */
+    .row.flex-md-row {
+      flex-direction: row;
+    }
+  
+    .col-md-6.flex-md-row, .col-md-6.flex-md-row .img-home {
+      display: flex;
+    }
+  
+    .col-md-6.flex-md-row {
+      justify-content: flex-end;
+    }
+  
+    .col-md-6.flex-md-row .img-home img {
+      margin-left: 20px;
+    }
+  }
+  
+
+/* category */
+
+.category_{
+  height: 400px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* min-height: 100vh; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ed9700;
+}
+.categoryTitle{
+  font-size: 27px;
+  text-align: center;
+  color: white;
+  margin-bottom: 25px;
+
+}
+.category_ .container{
+  overflow-x: hidden;
+}
+.container {
+  max-width: 100%;
+  width: 100%;
+  padding: 40px 15px; /* Adjust padding for responsiveness */
+}
+.slide-container {
+margin: 0 30px;
+overflow: hidden;
+}
+
+/* Add styles for the swiper-container */
+.swiper-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* Ensure the container takes up the full height of the card */
+  position: relative;
+}
+
+/* Ajoutez ce style CSS pour positionner les boutons de navigation */
+.swiper-button-next,
+.swiper-button-prev {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  color: #fff;
+  background-color: #ed9700;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.swiper-button-next {
+  right: 10px;
+}
+
+.swiper-button-prev {
+  left: 10px;
+}
+
+.swiper-pagination {
+  margin-top: 100px; /* Add margin to separate from navigation buttons */
+}
+
+/* Adjust the position of swiper pagination bullets */
+.swiper-pagination-bullet {
+  background-color: #000;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 100px;
+}
+
+
+.card {
+  flex: 0 0 calc(25% - 20px); /* Adjust card width for responsiveness */
+  margin: 0 10px; /* Adjust margin for responsiveness */
+  background: #fff;
+  border-radius: 8px;
+}
+.card:last-child {
+margin-right: 0;
+}
+
+.card .image-box {
+height: 200px;
+}
+
+.card .image-box img {
+width: 100%;
+height: 100%;
+border-radius: 8px 8px 0 0;
+}
+.card .profile-details {
+display: flex;
+align-items: center;
+column-gap: 12px;
+padding: 15px;
+}
+
+/* Adjust the previous and next buttons for responsiveness */
+.swiper-navBtn {
+  display: block;
+  color: #000;
+  height: 40px;
+  width: 40px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1; /* Ensure the buttons are above the cards */
+}
+
+/* .swiper-pagination-bullet {
+background-color: #000;
+} */
+.cate{
+  color: #000;
+}
+.description {
+  font-size: x-small !important;
+}
+
+/* @media screen and (max-width: 768px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+  }
+} */
+
+/* Adjust the card layout for smaller screens */
+@media screen and (max-width: 1200px) {
+  .card {
+    flex: 0 0 calc(33.33% - 20px); /* Adjust card width for smaller screens */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .card {
+    flex: 0 0 calc(50% - 20px); /* Adjust card width for mobile screens */
+  }
+}
+
+
+/* Evenement */
+
+.eventTitle{
+  font-size: 27px;
+  text-align: center;
+  color: #ed9700;
+  margin-bottom: 25px;
+  margin-top: 15px;
+
+}
+.eventText{
+  font-size: 15px;
+}
+  /* Styles personnalisés pour les divs d'événements */
+  .custom-event-item {
+    
+    font-size: 15px;
+    display: inline-block;
+    width: 300px; 
+    height: 250px; 
+    text-align: center; 
+  }
+
+  .custom-event-item img {
+    max-width: 100%; /* Optional: Make the image responsive within the div */
+    max-height: 300px; /* Optional: Set a maximum height for the image */
+  }
+
+
+/* Contact */
+
+
+.sendText {
+  color: #ed9700;
+  margin-bottom: 15px;
+  /* margin-right: 100px; */
+}
+
+
+.custom-input {
+  border: none;
+  border-bottom: 1px solid #ccc; 
+  border-radius: 0; 
+  padding: 0.5rem 0; 
+  margin-bottom: 10px;
+}
+
+
+.custom-input:focus {
+  outline: none;
+  border-color: #ccc;
+}
+
+
+.custom-input::placeholder {
+  color: #aaa;
+}
+
+
+section .information {
+  background-color: #ed9700;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  padding: 20px;
+}
+
+.enveloppe-icon{
+  margin-left: 70px;
+}
+.infoText {
+  color: white;
+  margin-top: 15px;
+  margin-bottom: 25px;
+}
+
+.infoSerie {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Reduce the space between icons and information */
+}
+
